@@ -1,0 +1,8 @@
+# Stack basado en el que ya validamos en el dashboard de flota
+# (streamlit + pyarrow libres = segfault en Streamlit Cloud). No lo
+# "actualices" sin probar en un entorno de prueba primero.
+streamlit>=1.35,<2.0
+pandas>=2.2,<3.0
+numpy>=1.26,<2.3
+pyarrow>=17,<20
+supabase>=2.9,<3.0
