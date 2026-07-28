@@ -192,7 +192,7 @@ filter_text = st.text_input("Buscar por código o nombre de proveedor…", "")
 
 tabs = st.tabs(["Vista general"] + DAYS)
 
-def render_list(day_filter):
+def render_list(day_filter, context):
     rows = providers if day_filter is None else [p for p in providers if p["day"] == day_filter]
     if filter_text.strip():
         f = filter_text.strip().lower()
@@ -226,16 +226,16 @@ def render_list(day_filter):
                     unsafe_allow_html=True,
                 )
             with cols[4]:
-                if st.button("Verificar / Actuar", key=f"verify_{p['id']}", use_container_width=True):
+                if st.button("Verificar / Actuar", key=f"verify_{context}_{p['id']}", use_container_width=True):
                     verify_dialog(p)
-                if st.button("✎ Editar", key=f"edit_{p['id']}", use_container_width=True):
+                if st.button("✎ Editar", key=f"edit_{context}_{p['id']}", use_container_width=True):
                     provider_dialog(p)
 
 with tabs[0]:
-    render_list(None)
+    render_list(None, "general")
 for i, day in enumerate(DAYS, start=1):
     with tabs[i]:
-        render_list(day)
+        render_list(day, day)
 
 st.markdown("---")
 st.subheader("🕒 Actividad reciente del equipo")
