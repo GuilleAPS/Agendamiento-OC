@@ -3,6 +3,7 @@ Agenda de Abastecimiento — versión Streamlit + Supabase
 Accesible por link normal, sin necesidad de cuenta de Claude.
 """
 import streamlit as st
+import html as _html
 from datetime import date, timedelta
 from supabase import create_client, Client
 
@@ -211,6 +212,12 @@ def render_list(day_filter, context):
                 st.caption(p["codigo"])
                 st.markdown(f"**{p['nombre']}**")
                 st.caption(f"📌 {p['day']}")
+                if p.get("notas", "").strip():
+                    st.markdown(
+                        f"<div style='font-size:11.5px;color:#8892A6;margin-top:2px;"
+                        f"font-style:italic;'>📝 {_html.escape(p['notas'])}</div>",
+                        unsafe_allow_html=True,
+                    )
             with cols[1]:
                 st.caption("Última OC")
                 st.write(fmt(p["fecha_ultima_oc"]))
